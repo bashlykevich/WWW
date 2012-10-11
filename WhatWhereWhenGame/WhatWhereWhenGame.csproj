@@ -107,6 +107,12 @@
     <Compile Include="Games\www\WWWSettings.xaml.cs">
       <DependentUpon>WWWSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Helpers\HtmlRemoval.cs" />
+    <Compile Include="Helpers\ProgressBarWithText.xaml.cs">
+      <DependentUpon>ProgressBarWithText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\RelativeAnimatingContentControl.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -155,6 +161,10 @@
     <Page Include="Games\www\WWWSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ProgressBarWithText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>

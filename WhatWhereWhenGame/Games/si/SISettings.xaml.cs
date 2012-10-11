@@ -6,11 +6,22 @@ using System.Windows;
 using HtmlAgilityPack;
 using Microsoft.Phone.Controls;
 using WhatWhereWhenGame.db.chgk.info;
+using System.Threading;
 
 namespace WhatWhereWhenGame.Games.si
 {
     public partial class SISettings : PhoneApplicationPage
     {
+        public bool ShowProgress
+        {
+            get { return (bool)GetValue(ShowProgressProperty); }
+            set { SetValue(ShowProgressProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowProgressProperty =
+            DependencyProperty.Register("ShowProgress", typeof(bool), typeof(SISettings), new PropertyMetadata(false));
+
         public SISettings()
         {
             InitializeComponent();
@@ -240,7 +251,7 @@ namespace WhatWhereWhenGame.Games.si
                         if (qs.EndsWith("."))
                             qs = qs.Substring(0, qs.Length - 1);
                         qs = qs.Trim();
-
+                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
                         q.answers.Add(qs);
                     }
                     string searchPattern5 = "&nbsp;&nbsp;&nbsp;&nbsp;5";
@@ -283,11 +294,14 @@ namespace WhatWhereWhenGame.Games.si
                     tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.author = txt;
+                    q.author = Helpers.HtmlRemoval.StripTagsCharArray(txt); ;
                 }
 
                 GameSI.Instance.Themes.Add(q);
             }
+            // stop progress bar
+            ShowProgress = false;
+            ContentPanel.Visibility = System.Windows.Visibility.Visible;
 
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/si/SIGameQuestion.xaml", UriKind.Relative));
@@ -295,7 +309,18 @@ namespace WhatWhereWhenGame.Games.si
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            InitizlizeQuestions();
+            LoadingData();
+        }
+        private void LoadingData()
+        {
+            ContentPanel.Visibility = System.Windows.Visibility.Collapsed;
+            ShowProgress = true;
+
+            ThreadPool.QueueUserWorkItem(
+                (o) =>
+                {
+                    this.Dispatcher.BeginInvoke(InitizlizeQuestions);
+                });
         }
     }
 }

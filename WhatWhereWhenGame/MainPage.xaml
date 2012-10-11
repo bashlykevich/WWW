@@ -20,14 +20,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" />
-        </StackPanel>
-
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="85" />
+            </Grid.RowDefinitions>
             <StackPanel
+                Grid.Row="0"
                 Orientation="Vertical">
                 <Button Content="Что? Где? Когда?" Height="131" Margin="2" Name="btnGameSelectWWW" VerticalAlignment="Top" FontSize="44" Click="btnGameSelectWWW_Click" />
                 <Button Content="Брэйн-ринг" Height="131" Margin="2" Name="button2" VerticalAlignment="Top" FontSize="44" Click="button2_Click" />
@@ -47,10 +47,13 @@
                        HorizontalAlignment="Stretch"
                        Text="Предложения и отзывы присылайте на bashlykevich@gmail.com"
                        TextWrapping="Wrap" />
-                <my:AdControl AdUnitId="Image480_80"
-                              ApplicationId="test_client" Height="91"
-                              Name="adControl1" Width="440" />
+
             </StackPanel>
+            <my:AdControl 
+                    Grid.Row="1"
+                    AdUnitId="Image480_80"                             
+                    ApplicationId="test_client" Height="80"
+                    Name="adControl1" Width="440" />
         </Grid>
     </Grid>
 

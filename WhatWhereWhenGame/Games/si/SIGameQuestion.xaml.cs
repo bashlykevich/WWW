@@ -56,7 +56,7 @@ namespace WhatWhereWhenGame.Games.si
 
             timeToAnswer = 15;
 
-            edtQuestion.Text = q.Questions[currentPoints] + " ->  " + q.answers[currentPoints];
+            edtQuestion.Text = q.Questions[currentPoints];
 
             DisplayScore();
 

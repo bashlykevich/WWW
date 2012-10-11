@@ -10,8 +10,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    mc:Ignorable="d" shell:SystemTray.IsVisible="True" d:DesignHeight="768" d:DesignWidth="480">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -21,26 +20,25 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,2,0,16">
             <TextBlock x:Name="ApplicationTitle" Text="Что? Где? Когда?" Style="{StaticResource PhoneTextNormalStyle}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="10,0,10,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="8,0,8,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="26" />
                 <RowDefinition Height="60" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="84" />
-                <RowDefinition Height="90" />
+                <RowDefinition Height="26" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="82" />
             </Grid.RowDefinitions>
-            <TextBlock
+            <TextBlock Name="edtNumber"
                     Grid.Row="0"
-                    Name="edtNumber"
                     Text="Вопрос №" />
-            <ScrollViewer
+            <ScrollViewer Name="svQuestion"
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
                               VerticalAlignment="Top"
@@ -70,9 +68,10 @@
                      Margin="0"
                      Text=""
                        Grid.Row="5"
-                       FontSize="36" TextWrapping="Wrap" />
-            <StackPanel
+                       FontSize="30" TextWrapping="Wrap" />
+            <StackPanel Name="spButtons"
                 Grid.Row="6"
+                HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button Name="btnAnswer" Width="230" Height="90" Content="Ответить" Click="btnAnswer_Click" />
                 <Button Name="btnSkip"   Width="230" Height="90" Content="Пропустить" Click="btnSkip_Click" />

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using HtmlAgilityPack;
 using Microsoft.Phone.Controls;
@@ -11,13 +12,20 @@ namespace WhatWhereWhenGame.Games.www
 {
     public partial class WWWSettings : PhoneApplicationPage
     {
+        public bool ShowProgress
+        {
+            get { return (bool)GetValue(ShowProgressProperty); }
+            set { SetValue(ShowProgressProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowProgressProperty =
+            DependencyProperty.Register("ShowProgress", typeof(bool), typeof(WWWSettings), new PropertyMetadata(false));
+
         public WWWSettings()
         {
-            InitializeComponent();
-
-            //WebClient client = new WebClient();
-            //client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(client_DownloadStringCompleted);
-            //client.DownloadStringAsync(new Uri(@"http://db.chgk.info/random"));
+            InitializeComponent();            
+            //this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
             RandomSettings settings = new RandomSettings();
             settings.DateFrom = new DateTime(1990, 1, 1);
@@ -32,11 +40,24 @@ namespace WhatWhereWhenGame.Games.www
             settings.ComplexityIndex = 0;
 
             edtQ.Text = settings.Quantity.ToString();
+            
             foreach (string s in settings.ComplexityList)
                 edtLevel.Items.Add(s);
             edtLevel.SelectedIndex = 0;
             edtDateStart.Value = settings.DateFrom;
             edtDateEnd.Value = settings.DateTo;
+        }
+   
+        private void LoadingData()
+        {
+            ContentPanel.Visibility = System.Windows.Visibility.Collapsed;
+            ShowProgress = true;
+
+            ThreadPool.QueueUserWorkItem(
+                (o) =>
+                {
+                    this.Dispatcher.BeginInvoke(InitizlizeQuestions);
+                });
         }
 
         private void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -178,13 +199,13 @@ namespace WhatWhereWhenGame.Games.www
                 start = nodetext.IndexOf("</strong>") + 9;
                 length = nodetext.IndexOf("<div class='collapsible collapsed'>") - start;
                 string qw = nodetext.Substring(start, length);
-                q.Question = qw;
+                q.Question =  Helpers.HtmlRemoval.StripTagsCharArray(qw);
 
                 start = nodetext.IndexOf("Ответ:</strong>") + 15;
                 string tmp1 = nodetext.Substring(start);
                 length = tmp1.IndexOf("</p>");
                 string qa = tmp1.Substring(0, length);
-                q.Answer = qa;
+                q.Answer =  Helpers.HtmlRemoval.StripTagsCharArray(qa);
 
                 if (nodetext.Contains("<strong>Комментарий:</strong>"))
                 {
@@ -192,7 +213,7 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.Comments = txt;
+                    q.Comments =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Источник(и):</strong>"))
                 {
@@ -200,7 +221,7 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.source = txt;
+                    q.source =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Автор:</strong>"))
                 {
@@ -208,11 +229,15 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.author = txt;
+                    q.author =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
 
                 GameWWW.Instance.Questions.Add(q);
             }
+
+            // stop progress bar
+            ShowProgress = false;
+            ContentPanel.Visibility = System.Windows.Visibility.Visible;
 
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/www/WWWGameQuestion.xaml", UriKind.Relative));
@@ -220,7 +245,7 @@ namespace WhatWhereWhenGame.Games.www
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            InitizlizeQuestions();
+            LoadingData();            
         }
     }
 }

@@ -10,8 +10,6 @@ namespace WhatWhereWhenGame
         public MainPage()
         {
             InitializeComponent();
-            PerformanceProgressBar bar = new PerformanceProgressBar();
-            bar.IsIndeterminate = true;
         }
 
         private void btnGameSelectWWW_Click(object sender, RoutedEventArgs e)

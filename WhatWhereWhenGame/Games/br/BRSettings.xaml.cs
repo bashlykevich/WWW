@@ -6,11 +6,22 @@ using System.Windows;
 using HtmlAgilityPack;
 using Microsoft.Phone.Controls;
 using WhatWhereWhenGame.db.chgk.info;
+using System.Threading;
 
 namespace WhatWhereWhenGame.Games.br
 {
     public partial class BRSettings : PhoneApplicationPage
     {
+        public bool ShowProgress
+        {
+            get { return (bool)GetValue(ShowProgressProperty); }
+            set { SetValue(ShowProgressProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowProgressProperty =
+            DependencyProperty.Register("ShowProgress", typeof(bool), typeof(BRSettings), new PropertyMetadata(false));
+
         public BRSettings()
         {
             InitializeComponent();
@@ -177,13 +188,13 @@ namespace WhatWhereWhenGame.Games.br
                 start = nodetext.IndexOf("</strong>") + 9;
                 length = nodetext.IndexOf("<div class='collapsible collapsed'>") - start;
                 string qw = nodetext.Substring(start, length);
-                q.Question = qw;
+                q.Question =  Helpers.HtmlRemoval.StripTagsCharArray(qw);
 
                 start = nodetext.IndexOf("Ответ:</strong>") + 15;
                 string tmp1 = nodetext.Substring(start);
                 length = tmp1.IndexOf("</p>");
                 string qa = tmp1.Substring(0, length);
-                q.Answer = qa;
+                q.Answer =  Helpers.HtmlRemoval.StripTagsCharArray(qa);
 
                 if (nodetext.Contains("<strong>Комментарий:</strong>"))
                 {
@@ -191,7 +202,7 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.Comments = txt;
+                    q.Comments =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Источник(и):</strong>"))
                 {
@@ -199,7 +210,7 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.source = txt;
+                    q.source =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Автор:</strong>"))
                 {
@@ -207,11 +218,14 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.author = txt;
+                    q.author =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
 
                 GameBR.Instance.Questions.Add(q);
             }
+            // stop progress bar
+            ShowProgress = false;
+            ContentPanel.Visibility = System.Windows.Visibility.Visible;
 
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/br/BRGameQuestion.xaml", UriKind.Relative));
@@ -219,7 +233,18 @@ namespace WhatWhereWhenGame.Games.br
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            InitizlizeQuestions();
+            LoadingData();
+        }
+        private void LoadingData()
+        {
+            ContentPanel.Visibility = System.Windows.Visibility.Collapsed;
+            ShowProgress = true;
+
+            ThreadPool.QueueUserWorkItem(
+                (o) =>
+                {
+                    this.Dispatcher.BeginInvoke(InitizlizeQuestions);
+                });
         }
     }
 }
