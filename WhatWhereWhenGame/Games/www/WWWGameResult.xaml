@@ -38,8 +38,8 @@
                        FontFamily="Courier New"
                        Grid.Row="0"
                        HorizontalAlignment="Center"
-                       Text="6:5"                       
-                       />
+                       Text="6:5"
+ />
             <TextBlock Name="edtMessage"
                 TextAlignment="Center"
                 HorizontalAlignment="Stretch"
@@ -47,16 +47,16 @@
 
             <StackPanel
                 Grid.Row="2"
-                Orientation="Vertical">               
-                    <TextBlock Name="edtAnswer"
+                Orientation="Vertical">
+                <TextBlock Name="edtAnswer"
                        Text="Ответ:"
                        FontSize="26"
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"
                                TextWrapping="Wrap" />
-                
+
                 <StackPanel Name="spCount"
-                HorizontalAlignment="Right"               
+                HorizontalAlignment="Right"
                 Orientation="Horizontal">
                     <Button
                     HorizontalAlignment="Center"
@@ -70,7 +70,7 @@
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"
                        TextWrapping="Wrap" />
-                <ScrollViewer Name="svComments"                    
+                <ScrollViewer Name="svComments"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     VerticalScrollBarVisibility="Auto">

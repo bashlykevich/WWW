@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using HtmlAgilityPack;
 using Microsoft.Phone.Controls;
 using WhatWhereWhenGame.db.chgk.info;
-using System.Threading;
 
 namespace WhatWhereWhenGame.Games.si
 {
@@ -299,6 +299,7 @@ namespace WhatWhereWhenGame.Games.si
 
                 GameSI.Instance.Themes.Add(q);
             }
+
             // stop progress bar
             ShowProgress = false;
             ContentPanel.Visibility = System.Windows.Visibility.Visible;
@@ -311,6 +312,7 @@ namespace WhatWhereWhenGame.Games.si
         {
             LoadingData();
         }
+
         private void LoadingData()
         {
             ContentPanel.Visibility = System.Windows.Visibility.Collapsed;

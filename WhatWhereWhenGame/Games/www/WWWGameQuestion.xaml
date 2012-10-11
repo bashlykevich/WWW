@@ -32,7 +32,7 @@
                 <RowDefinition Height="26" />
                 <RowDefinition Height="60" />
                 <RowDefinition Height="26" />
-                <RowDefinition Height="70" />
+                <RowDefinition Height="80" />
                 <RowDefinition Height="82" />
             </Grid.RowDefinitions>
             <TextBlock Name="edtNumber"
@@ -66,7 +66,6 @@
                            TextAlignment="Center" />
             <TextBox Name="edtAnswer"
                      Margin="0"
-                     Text=""
                        Grid.Row="5"
                        FontSize="30" TextWrapping="Wrap" />
             <StackPanel Name="spButtons"

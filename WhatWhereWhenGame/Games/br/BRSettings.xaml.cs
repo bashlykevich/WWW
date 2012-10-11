@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using HtmlAgilityPack;
 using Microsoft.Phone.Controls;
 using WhatWhereWhenGame.db.chgk.info;
-using System.Threading;
 
 namespace WhatWhereWhenGame.Games.br
 {
@@ -188,13 +188,13 @@ namespace WhatWhereWhenGame.Games.br
                 start = nodetext.IndexOf("</strong>") + 9;
                 length = nodetext.IndexOf("<div class='collapsible collapsed'>") - start;
                 string qw = nodetext.Substring(start, length);
-                q.Question =  Helpers.HtmlRemoval.StripTagsCharArray(qw);
+                q.Question = Helpers.HtmlRemoval.StripTagsCharArray(qw);
 
                 start = nodetext.IndexOf("Ответ:</strong>") + 15;
                 string tmp1 = nodetext.Substring(start);
                 length = tmp1.IndexOf("</p>");
                 string qa = tmp1.Substring(0, length);
-                q.Answer =  Helpers.HtmlRemoval.StripTagsCharArray(qa);
+                q.Answer = Helpers.HtmlRemoval.StripTagsCharArray(qa);
 
                 if (nodetext.Contains("<strong>Комментарий:</strong>"))
                 {
@@ -202,7 +202,7 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.Comments =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.Comments = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Источник(и):</strong>"))
                 {
@@ -210,7 +210,7 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.source =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.source = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Автор:</strong>"))
                 {
@@ -218,11 +218,12 @@ namespace WhatWhereWhenGame.Games.br
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.author =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.author = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
 
                 GameBR.Instance.Questions.Add(q);
             }
+
             // stop progress bar
             ShowProgress = false;
             ContentPanel.Visibility = System.Windows.Visibility.Visible;
@@ -235,6 +236,7 @@ namespace WhatWhereWhenGame.Games.br
         {
             LoadingData();
         }
+
         private void LoadingData()
         {
             ContentPanel.Visibility = System.Windows.Visibility.Collapsed;

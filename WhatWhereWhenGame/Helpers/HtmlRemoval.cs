@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace WhatWhereWhenGame.Helpers
 {
@@ -19,7 +18,7 @@ namespace WhatWhereWhenGame.Helpers
         /// <summary>
         /// Compiled regular expression for performance.
         /// </summary>
-        static Regex _htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
+        private static Regex _htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
         /// <summary>
         /// Remove HTML from string with compiled Regex.

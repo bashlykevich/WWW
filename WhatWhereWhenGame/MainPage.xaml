@@ -23,7 +23,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
                 <RowDefinition Height="85" />
             </Grid.RowDefinitions>
             <StackPanel
@@ -47,11 +47,10 @@
                        HorizontalAlignment="Stretch"
                        Text="Предложения и отзывы присылайте на bashlykevich@gmail.com"
                        TextWrapping="Wrap" />
-
             </StackPanel>
-            <my:AdControl 
+            <my:AdControl
                     Grid.Row="1"
-                    AdUnitId="Image480_80"                             
+                    AdUnitId="Image480_80"
                     ApplicationId="test_client" Height="80"
                     Name="adControl1" Width="440" />
         </Grid>

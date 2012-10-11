@@ -32,14 +32,14 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Height="30" HorizontalAlignment="Left" Margin="2" Name="textBlock1" Text="Сложность вопросов" VerticalAlignment="Top" Width="440" />
-                <toolbox:ListPicker Height="60" HorizontalAlignment="Center"  Margin="2,0,2,0" Name="edtLevel" VerticalAlignment="Top" Width="440" >
+                <toolbox:ListPicker Height="60" HorizontalAlignment="Center"  Margin="2,0,2,0" Name="edtLevel" VerticalAlignment="Top" Width="440">
                     <toolbox:ListPicker.FullModeItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
-                                <TextBlock Text="{Binding}"    
-                                           Margin="0 0 0 0"    
-                                           FontSize="43"     
-                                           FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                                <TextBlock Text="{Binding}"
+                                           Margin="0 0 0 0"
+                                           FontSize="43"
+                                           FontFamily="{StaticResource PhoneFontFamilyLight}" />
                             </StackPanel>
                         </DataTemplate>
                     </toolbox:ListPicker.FullModeItemTemplate>
@@ -83,7 +83,6 @@
             VerticalContentAlignment="Stretch"
                         Text="Загрузка вопросов..."
                         ShowProgress="{Binding ElementName=wwwSettings, Path=ShowProgress}" />
-
     </Grid>
 
     <!--Sample code showing usage of ApplicationBar-->

@@ -37,10 +37,10 @@
                     <toolbox:ListPicker.FullModeItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
-                                <TextBlock Text="{Binding}"    
-                                           Margin="0 0 0 0"    
-                                           FontSize="43"     
-                                           FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                                <TextBlock Text="{Binding}"
+                                           Margin="0 0 0 0"
+                                           FontSize="43"
+                                           FontFamily="{StaticResource PhoneFontFamilyLight}" />
                             </StackPanel>
                         </DataTemplate>
                     </toolbox:ListPicker.FullModeItemTemplate>

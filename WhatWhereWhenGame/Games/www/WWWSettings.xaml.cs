@@ -24,7 +24,8 @@ namespace WhatWhereWhenGame.Games.www
 
         public WWWSettings()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
             //this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
             RandomSettings settings = new RandomSettings();
@@ -40,14 +41,14 @@ namespace WhatWhereWhenGame.Games.www
             settings.ComplexityIndex = 0;
 
             edtQ.Text = settings.Quantity.ToString();
-            
+
             foreach (string s in settings.ComplexityList)
                 edtLevel.Items.Add(s);
             edtLevel.SelectedIndex = 0;
             edtDateStart.Value = settings.DateFrom;
             edtDateEnd.Value = settings.DateTo;
         }
-   
+
         private void LoadingData()
         {
             ContentPanel.Visibility = System.Windows.Visibility.Collapsed;
@@ -199,13 +200,13 @@ namespace WhatWhereWhenGame.Games.www
                 start = nodetext.IndexOf("</strong>") + 9;
                 length = nodetext.IndexOf("<div class='collapsible collapsed'>") - start;
                 string qw = nodetext.Substring(start, length);
-                q.Question =  Helpers.HtmlRemoval.StripTagsCharArray(qw);
+                q.Question = Helpers.HtmlRemoval.StripTagsCharArray(qw);
 
                 start = nodetext.IndexOf("Ответ:</strong>") + 15;
                 string tmp1 = nodetext.Substring(start);
                 length = tmp1.IndexOf("</p>");
                 string qa = tmp1.Substring(0, length);
-                q.Answer =  Helpers.HtmlRemoval.StripTagsCharArray(qa);
+                q.Answer = Helpers.HtmlRemoval.StripTagsCharArray(qa);
 
                 if (nodetext.Contains("<strong>Комментарий:</strong>"))
                 {
@@ -213,7 +214,7 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.Comments =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.Comments = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Источник(и):</strong>"))
                 {
@@ -221,7 +222,7 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.source =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.source = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
                 if (nodetext.Contains("<strong>Автор:</strong>"))
                 {
@@ -229,7 +230,7 @@ namespace WhatWhereWhenGame.Games.www
                     string tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.author =  Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                    q.author = Helpers.HtmlRemoval.StripTagsCharArray(txt);
                 }
 
                 GameWWW.Instance.Questions.Add(q);
@@ -245,7 +246,7 @@ namespace WhatWhereWhenGame.Games.www
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            LoadingData();            
+            LoadingData();
         }
     }
 }
