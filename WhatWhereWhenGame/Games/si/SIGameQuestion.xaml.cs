@@ -54,8 +54,7 @@ namespace WhatWhereWhenGame.Games.si
             btnFix.Visibility = System.Windows.Visibility.Collapsed;
             RightAnswer = false;
 
-            timeToAnswer = 15;
-
+            timeToAnswer = 15;            
             edtQuestion.Text = q.Questions[currentPoints];
 
             DisplayScore();
@@ -210,6 +209,11 @@ namespace WhatWhereWhenGame.Games.si
                 GameSI.Instance.statiscticsMinus[currentPoints]--;
                 DisplayScore();
             }
+        }
+
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
         }
     }
 }

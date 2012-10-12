@@ -9,6 +9,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
+    BackKeyPress="PhoneApplicationPage_BackKeyPress"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
@@ -71,12 +72,12 @@
                               VerticalAlignment="Top"
                               VerticalScrollBarVisibility="Auto">
                 <TextBlock
-                        Name="edtQuestion"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Stretch"
-                               FontSize="24"
+                    Name="edtQuestion"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    FontSize="24"
                     Text=""
-                               TextWrapping="Wrap" />
+                    TextWrapping="Wrap" />
             </ScrollViewer>
             <TextBlock Name="edtAnswerTitle"
                      Visibility="Collapsed"
@@ -84,6 +85,7 @@
                        Text="Ваш ответ" />
             <TextBox Name="edtAnswer"
                      Visibility="Collapsed"
+                     InputScope="Text"
                        Grid.Row="5"
                        FontSize="35"
                        Text="" />

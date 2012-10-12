@@ -26,5 +26,16 @@ namespace WhatWhereWhenGame
         {
             NavigationService.Navigate(new Uri(@"/Games/si/SISettings.xaml", UriKind.Relative));
         }
+
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                while (NavigationService.RemoveBackEntry() != null)
+                {
+                    NavigationService.RemoveBackEntry();
+                }
+            }
+        }
     }
 }

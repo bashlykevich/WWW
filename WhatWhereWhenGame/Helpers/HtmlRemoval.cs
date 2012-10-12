@@ -8,6 +8,16 @@ namespace WhatWhereWhenGame.Helpers
     public static class HtmlRemoval
     {
         /// <summary>
+        /// Remove char codes from string with Regex.
+        /// </summary>
+        public static string StripCharCodes(string source)
+        {
+            source = source.Replace("\n", " ");
+            source = source.Replace("&nbsp;", " ");
+            source = source.Replace("&mdash;", "-");
+            return source;
+        }
+        /// <summary>
         /// Remove HTML from string with Regex.
         /// </summary>
         public static string StripTagsRegex(string source)
@@ -33,6 +43,7 @@ namespace WhatWhereWhenGame.Helpers
         /// </summary>
         public static string StripTagsCharArray(string source)
         {
+            source = StripCharCodes(source);
             char[] array = new char[source.Length];
             int arrayIndex = 0;
             bool inside = false;
@@ -56,7 +67,11 @@ namespace WhatWhereWhenGame.Helpers
                     arrayIndex++;
                 }
             }
-            return new string(array, 0, arrayIndex);
+            string s = new string(array, 0, arrayIndex);
+            s = s.Trim();
+            if (s.StartsWith("."))
+                s = s.Substring(1);
+            return s;
         }
     }
 }

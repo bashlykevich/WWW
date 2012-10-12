@@ -107,5 +107,10 @@ namespace WhatWhereWhenGame.Games.www
         {
             Answer();
         }
+
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
     }
 }

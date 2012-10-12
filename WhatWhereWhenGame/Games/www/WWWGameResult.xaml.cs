@@ -64,5 +64,10 @@ namespace WhatWhereWhenGame.Games.www
                 RightAnswer = true;
             }
         }
+
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
     }
 }

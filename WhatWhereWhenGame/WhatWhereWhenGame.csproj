@@ -187,6 +187,7 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\icon.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="todo.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

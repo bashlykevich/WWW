@@ -119,11 +119,6 @@ namespace WhatWhereWhenGame.Games.si
             }
             settings.DateTo = new DateTime(1989 + dty, dtm, dtd);
             settings.Quantity = Int32.Parse(doc.GetElementbyId("edit-limit").Attributes["value"].Value);
-
-            //settings.DateFrom = new DateTime(1990, 1, 1);
-            //settings.DateTo = DateTime.Now;
-            //settings.Quantity = 24;
-
             try
             {
                 Action action = () =>
@@ -176,10 +171,6 @@ namespace WhatWhereWhenGame.Games.si
 
                 ThemeSI q = new ThemeSI();
 
-                /*
-                public List<string> answers;
-                public List<string> questions;
-                */
                 Regex r = new Regex(@"<a.*?>(.*?)</a>.*?");
                 string a = r.Match(random_question.InnerHtml).Value;
                 string descr = Regex.Match(a, @">(.*?)</").Value.Replace(">", "").Replace(@"</", "");
@@ -195,6 +186,8 @@ namespace WhatWhereWhenGame.Games.si
                 if (length > 0)
                 {
                     string th = tmp.Substring(0, length);
+                    if (th.EndsWith("."))
+                        th = th.Substring(0, th.Length - 1);
                     q.name = th;
                 }
                 else
@@ -215,8 +208,9 @@ namespace WhatWhereWhenGame.Games.si
                         tmp = txt.Substring(start);
                         length = tmp.IndexOf("<br>");
                         string qs = tmp.Substring(0, length);
-                        qs = qs.Replace("\n", "");
-                        qs = qs.Replace("&mdash;", "-");
+                                        
+                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
+                        
                         q.Questions.Add(qs);
                     }
                     string searchPattern5 = "&nbsp;&nbsp;&nbsp;&nbsp;5";
@@ -224,7 +218,9 @@ namespace WhatWhereWhenGame.Games.si
                     tmp = txt.Substring(start);
                     length = tmp.IndexOf("<div class='collapsible ");
                     string qs5 = tmp.Substring(0, length);
-                    qs5 = qs5.Replace("\n", "");
+                    
+                    qs5 =  Helpers.HtmlRemoval.StripTagsCharArray(qs5);                    
+                    
                     q.Questions.Add(qs5);
                 }
 
@@ -241,44 +237,20 @@ namespace WhatWhereWhenGame.Games.si
                         start = txt.IndexOf(searchPattern + i.ToString()) + searchPattern.Length + 2;
                         tmp = txt.Substring(start);
                         length = tmp.IndexOf("<br>");
-                        string qs = tmp.Substring(0, length);
-
-                        qs = qs.Replace("\n", "");
-                        qs = qs.Replace("&mdash;", "-");
-                        qs = qs.Trim();
-                        if (qs.StartsWith("."))
-                            qs = qs.Substring(1);
+                        string qs = tmp.Substring(0, length);                        
+                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
                         if (qs.EndsWith("."))
                             qs = qs.Substring(0, qs.Length - 1);
-                        qs = qs.Trim();
-                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
                         q.answers.Add(qs);
                     }
                     string searchPattern5 = "&nbsp;&nbsp;&nbsp;&nbsp;5";
                     start = txt.IndexOf(searchPattern5) + searchPattern5.Length;
                     string s = txt.Substring(start);
-                    s = s.Replace("\n", "");
-                    s = s.Replace("&mdash;", "-");
-                    s = s.Trim();
-                    if (s.StartsWith("."))
-                        s = s.Substring(1);
+                    s = Helpers.HtmlRemoval.StripTagsCharArray(s);                    
                     if (s.EndsWith("."))
-                        s = s.Substring(0, s.Length - 1);
-                    s = s.Trim();
+                        s = s.Substring(0, s.Length-1);
                     q.answers.Add(s);
                 }
-
-                /*
-                start = nodetext.IndexOf("</strong>")+9;
-                length = nodetext.IndexOf("<div class='collapsible collapsed'>") - start;
-                string qw = nodetext.Substring(start, length);
-                q.Question = qw;
-
-                start = nodetext.IndexOf("Ответ:</strong>") + 15;
-                string tmp1 = nodetext.Substring(start);
-                length = tmp1.IndexOf("</p>");
-                string qa = tmp1.Substring(0, length);
-                q.Answer = qa;*/
 
                 if (nodetext.Contains("<strong>Источник(и):</strong>"))
                 {
@@ -286,7 +258,7 @@ namespace WhatWhereWhenGame.Games.si
                     tmp = nodetext.Substring(start);
                     length = tmp.IndexOf("</p>");
                     string txt = tmp.Substring(0, length);
-                    q.source = txt;
+                    q.source = Helpers.HtmlRemoval.StripTagsCharArray(txt);              
                 }
                 if (nodetext.Contains("<strong>Автор:</strong>"))
                 {

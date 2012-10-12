@@ -26,10 +26,6 @@ namespace WhatWhereWhenGame.Games.br
         {
             InitializeComponent();
 
-            //WebClient client = new WebClient();
-            //client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(client_DownloadStringCompleted);
-            //client.DownloadStringAsync(new Uri(@"http://db.chgk.info/random"));
-
             RandomSettings settings = new RandomSettings();
             settings.DateFrom = new DateTime(1990, 1, 1);
             settings.DateTo = DateTime.Now;
@@ -120,10 +116,6 @@ namespace WhatWhereWhenGame.Games.br
             settings.DateTo = new DateTime(1989 + dty, dtm, dtd);
             settings.Quantity = Int32.Parse(doc.GetElementbyId("edit-limit").Attributes["value"].Value);
 
-            //settings.DateFrom = new DateTime(1990, 1, 1);
-            //settings.DateTo = DateTime.Now;
-            //settings.Quantity = 24;
-
             try
             {
                 Action action = () =>
@@ -165,9 +157,7 @@ namespace WhatWhereWhenGame.Games.br
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(e.Result);
 
-            //HtmlNode random_results = doc.Wh("random-results");
-            //HtmlNode random_results = doc.DocumentNode.SelectSingleNode("//div[@class='random-results']");
-            var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
+             var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
             foreach (HtmlNode random_question in foos)
             {
                 string nodetext = random_question.InnerHtml;
