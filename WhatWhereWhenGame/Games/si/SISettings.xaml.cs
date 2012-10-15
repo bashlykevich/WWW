@@ -49,95 +49,8 @@ namespace WhatWhereWhenGame.Games.si
             edtDateStart.Value = settings.DateFrom;
             edtDateEnd.Value = settings.DateTo;
         }
-
-        private void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            HtmlNode.ElementsFlags.Remove("option");
-
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(e.Result);
-
-            RandomSettings settings = new RandomSettings();
-            HtmlNode selbox = doc.GetElementbyId("edit-complexity");
-
-            HtmlNodeCollection nodes = selbox.ChildNodes;
-            foreach (HtmlNode opt in nodes)
-            {
-                string item = opt.InnerText.Contains(" -- ") ? "Любой" : opt.InnerText;
-                settings.ComplexityList.Add(item);
-            }
-
-            int dfd = -1;
-            int dfm = -1;
-            int dfy = -1;
-            HtmlNodeCollection nodes1 = doc.GetElementbyId("edit-from-date-day").ChildNodes;
-            foreach (HtmlNode node in nodes1)
-            {
-                dfd++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            HtmlNodeCollection nodes2 = doc.GetElementbyId("edit-from-date-month").ChildNodes;
-            foreach (HtmlNode node in nodes2)
-            {
-                dfm++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            HtmlNodeCollection nodes3 = doc.GetElementbyId("edit-from-date-year").ChildNodes;
-            foreach (HtmlNode node in nodes2)
-            {
-                dfy++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            settings.DateFrom = new DateTime(1989 + dfy, dfm, dfd);
-
-            int dtd = -1;
-            int dtm = -1;
-            int dty = -1;
-            nodes1 = doc.GetElementbyId("edit-to-date-day").ChildNodes;
-            foreach (HtmlNode node in nodes1)
-            {
-                dtd++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            nodes2 = doc.GetElementbyId("edit-to-date-month").ChildNodes;
-            foreach (HtmlNode node in nodes2)
-            {
-                dtm++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            nodes3 = doc.GetElementbyId("edit-to-date-year").ChildNodes;
-            foreach (HtmlNode node in nodes2)
-            {
-                dty++;
-                if (node.Attributes.Where(a => a.Name == "selected").Count() > 0)
-                    break;
-            }
-            settings.DateTo = new DateTime(1989 + dty, dtm, dtd);
-            settings.Quantity = Int32.Parse(doc.GetElementbyId("edit-limit").Attributes["value"].Value);
-            try
-            {
-                Action action = () =>
-                    {
-                        edtQ.Text = settings.Quantity.ToString();
-                        foreach (string s in settings.ComplexityList)
-                            edtLevel.Items.Add(s);
-                        edtDateStart.Value = settings.DateFrom;
-                        edtDateEnd.Value = settings.DateTo;
-                    };
-                Dispatcher.BeginInvoke(action);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void InitizlizeQuestions()
+    
+        private void InitializeQuestions()
         {
             string url = @"http://db.chgk.info/random";
             string fromDate = @"/from_" + edtDateStart.Value.Value.ToString("yyyy-MM-dd");
@@ -156,6 +69,12 @@ namespace WhatWhereWhenGame.Games.si
 
         private void QuestionsDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                MessageBox.Show("Ошибка подключения к базе вопросов. Проверьте соединение с интернетом.");
+                NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+                return;
+            }
             HtmlNode.ElementsFlags.Remove("option");
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(e.Result);
@@ -293,7 +212,7 @@ namespace WhatWhereWhenGame.Games.si
             ThreadPool.QueueUserWorkItem(
                 (o) =>
                 {
-                    this.Dispatcher.BeginInvoke(InitizlizeQuestions);
+                    this.Dispatcher.BeginInvoke(InitializeQuestions);
                 });
         }
     }
