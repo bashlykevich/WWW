@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 
 namespace WhatWhereWhenGame
 {
@@ -9,7 +10,7 @@ namespace WhatWhereWhenGame
         // Constructor
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void btnGameSelectWWW_Click(object sender, RoutedEventArgs e)
@@ -36,6 +37,20 @@ namespace WhatWhereWhenGame
                     NavigationService.RemoveBackEntry();
                 }
             }
+        }
+
+        private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (svLicense.Visibility == System.Windows.Visibility.Visible)
+                svLicense.Visibility = System.Windows.Visibility.Collapsed;
+            else
+                svLicense.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void btnRate_Click(object sender, RoutedEventArgs e)
+        {
+            MarketplaceReviewTask marketplaceReviewTask = new MarketplaceReviewTask();
+            marketplaceReviewTask.Show();
         }
     }
 }
