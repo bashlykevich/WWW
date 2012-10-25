@@ -88,8 +88,14 @@ namespace WhatWhereWhenGame.Games.www
             HtmlNode.ElementsFlags.Remove("option");
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(e.Result);
-
-            var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
+            HtmlNodeCollection quests = doc.DocumentNode.SelectNodes("//div[@class='random_question']");
+            if (quests == null)
+            {
+                MessageBox.Show("По вашему запросу ничего не найдено! Попробуйте изменить параметры игры.");
+                NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+                return;
+            }
+            var foos = from foo in quests select foo;
             foreach (HtmlNode random_question in foos)
             {
                 string nodetext = random_question.InnerHtml;

@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System;
 
 namespace WhatWhereWhenGame
 {
@@ -88,7 +89,8 @@ namespace WhatWhereWhenGame
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
-                System.Diagnostics.Debugger.Break();
+                //System.Diagnostics.Debugger.Break();
+                MessageBox.Show("Непредвиденный сбой! Пожалуйста, перезапустите программму.");
             }
         }
 

@@ -30,6 +30,7 @@
             <StackPanel
                 Grid.Row="0"
                 Orientation="Vertical">
+                
                 <Button Content="Что? Где? Когда?" Height="131" Margin="2" Name="btnGameSelectWWW" VerticalAlignment="Top" FontSize="44" Click="btnGameSelectWWW_Click" />
                 <Button Content="Брэйн-ринг" Height="131" Margin="2" Name="button2" VerticalAlignment="Top" FontSize="44" Click="button2_Click" />
                 <Button Content="Своя игра" Height="131" Margin="2" Name="button3" VerticalAlignment="Top" FontSize="44" Click="button3_Click" />

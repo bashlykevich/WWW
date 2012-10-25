@@ -81,6 +81,7 @@ namespace WhatWhereWhenGame.Games.si
             if (!doc.DocumentNode.InnerHtml.Contains("random_question"))
             {
                 MessageBox.Show("Вопросов не найдено!");
+                NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
                 return;
             }
             var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
