@@ -156,7 +156,8 @@ namespace WhatWhereWhenGame.Games.www
             // stop progress bar
             ShowProgress = false;
             ContentPanel.Visibility = System.Windows.Visibility.Visible;
-
+            GameWWW.Instance.Score = 0;
+            GameWWW.Instance.CurrentIndex = 0;
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/www/WWWGameQuestion.xaml", UriKind.Relative));
         }

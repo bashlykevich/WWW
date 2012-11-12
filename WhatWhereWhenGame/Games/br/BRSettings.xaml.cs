@@ -142,7 +142,8 @@ namespace WhatWhereWhenGame.Games.br
             // stop progress bar
             ShowProgress = false;
             ContentPanel.Visibility = System.Windows.Visibility.Visible;
-
+            GameBR.Instance.Score = 0;
+            GameBR.Instance.CurrentIndex = 0;
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/br/BRGameQuestion.xaml", UriKind.Relative));
         }
