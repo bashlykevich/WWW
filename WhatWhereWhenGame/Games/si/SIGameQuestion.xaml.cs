@@ -29,6 +29,9 @@ namespace WhatWhereWhenGame.Games.si
             tb[3] = edtPoints40;
             tb[4] = edtPoints50;
 
+            if (GameSI.Instance.Themes.Count == 0)
+                NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+
             index = GameSI.Instance.CurrentIndex;
             q = GameSI.Instance.Themes[index];
             edtTheme.Text = "ТЕМА №" + (index + 1).ToString() + ": " + q.name;
@@ -39,22 +42,23 @@ namespace WhatWhereWhenGame.Games.si
 
         private void BindQuestion()
         {
-            btnGo.Content = "Ok";
+            btnOk.Visibility = System.Windows.Visibility.Visible;
+            btnOk.Content = " OK ";
             btnSkip.Content = "Пропустить";
 
-            //btnAnswer.IsEnabled = true;
+            btnAnswer.IsEnabled = true;
             btnAnswer.Visibility = System.Windows.Visibility.Visible;
             btnSkip.Visibility = System.Windows.Visibility.Visible;
             edtTimer.Visibility = System.Windows.Visibility.Visible;
             btnGo.Visibility = System.Windows.Visibility.Collapsed;
-            edtAnswer.Visibility = System.Windows.Visibility.Collapsed;
+            grAnswer.Visibility = System.Windows.Visibility.Collapsed;
             edtAnswer.Text = "";
             edtAnswer.IsReadOnly = false;
             edtAnswerTitle.Visibility = System.Windows.Visibility.Collapsed;
             btnFix.Visibility = System.Windows.Visibility.Collapsed;
             RightAnswer = false;
 
-            timeToAnswer = 15;            
+            timeToAnswer = 15;
             edtQuestion.Text = q.Questions[currentPoints];
 
             DisplayScore();
@@ -128,7 +132,6 @@ namespace WhatWhereWhenGame.Games.si
                 NextTheme();
             }
         }
-
         private void btnAnswer_Click(object sender, RoutedEventArgs e)
         {
             timer.Stop();
@@ -137,8 +140,8 @@ namespace WhatWhereWhenGame.Games.si
             btnSkip.Visibility = System.Windows.Visibility.Collapsed;
             edtTimer.Visibility = System.Windows.Visibility.Collapsed;
 
-            btnGo.Visibility = System.Windows.Visibility.Visible;
-            edtAnswer.Visibility = System.Windows.Visibility.Visible;
+            //btnGo.Visibility = System.Windows.Visibility.Visible;
+            grAnswer.Visibility = System.Windows.Visibility.Visible;
             edtAnswerTitle.Visibility = System.Windows.Visibility.Visible;
             edtAnswer.Focus();
         }
@@ -161,40 +164,15 @@ namespace WhatWhereWhenGame.Games.si
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-            if (btnFix.Visibility == System.Windows.Visibility.Collapsed)
-            {
-                edtAnswer.IsReadOnly = true;
-                edtQuestion.Text = "Ответ: " + q.answers[currentPoints];
-                btnFix.Visibility = System.Windows.Visibility.Visible;
-                btnGo.Content = "Далее";
-                q.userAnswers.Add(edtAnswer.Text);
-                if (edtAnswer.Text.ToUpper() == q.answers[currentPoints].ToUpper())
-                {
-                    RightAnswer = true;
-                    tb[currentPoints].Text = "+" + tb[currentPoints].Text;
-                    GameSI.Instance.Score += (currentPoints + 1) * 10;
-                    GameSI.Instance.statiscticsPlus[currentPoints]++;
-                }
-                else
-                {
-                    tb[currentPoints].Text = "-" + tb[currentPoints].Text;
-                    GameSI.Instance.Score -= (currentPoints + 1) * 10;
-                    GameSI.Instance.statiscticsMinus[currentPoints]++;
-                }
-                DisplayScore();
+
+            if (currentPoints < 4)
+            {                
+                currentPoints++;
+                BindQuestion();
             }
             else
             {
-                if (currentPoints < 4)
-                {
-                    //tb[currentPoints].Text = "-";
-                    currentPoints++;
-                    BindQuestion();
-                }
-                else
-                {
-                    NextTheme();
-                }
+                NextTheme();
             }
         }
 
@@ -214,6 +192,31 @@ namespace WhatWhereWhenGame.Games.si
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            btnOk.Visibility = System.Windows.Visibility.Collapsed;
+            btnGo.Visibility = System.Windows.Visibility.Visible;
+            edtAnswer.IsReadOnly = true;
+            edtQuestion.Text = "Ответ: " + q.answers[currentPoints];
+            btnFix.Visibility = System.Windows.Visibility.Visible;
+            btnOk.Content = "Далее";
+            q.userAnswers.Add(edtAnswer.Text);
+            if (edtAnswer.Text.ToUpper() == q.answers[currentPoints].ToUpper())
+            {
+                RightAnswer = true;
+                tb[currentPoints].Text = "+" + tb[currentPoints].Text;
+                GameSI.Instance.Score += (currentPoints + 1) * 10;
+                GameSI.Instance.statiscticsPlus[currentPoints]++;
+            }
+            else
+            {
+                tb[currentPoints].Text = "-" + tb[currentPoints].Text;
+                GameSI.Instance.Score -= (currentPoints + 1) * 10;
+                GameSI.Instance.statiscticsMinus[currentPoints]++;
+            }
+            DisplayScore();
         }
     }
 }

@@ -25,10 +25,8 @@ namespace WhatWhereWhenGame.Games.si
         public SISettings()
         {
             InitializeComponent();
-
-            //WebClient client = new WebClient();
-            //client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(client_DownloadStringCompleted);
-            //client.DownloadStringAsync(new Uri(@"http://db.chgk.info/random"));
+            
+            GameSI.Instance.Reset();         
 
             RandomSettings settings = new RandomSettings();
             settings.DateFrom = new DateTime(1990, 1, 1);
@@ -74,7 +72,7 @@ namespace WhatWhereWhenGame.Games.si
                 MessageBox.Show("Ошибка подключения к базе вопросов. Проверьте соединение с интернетом.");
                 NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
                 return;
-            }
+            }            
             HtmlNode.ElementsFlags.Remove("option");
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(e.Result);
@@ -84,118 +82,17 @@ namespace WhatWhereWhenGame.Games.si
                 NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
                 return;
             }
+            
             var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
             foreach (HtmlNode random_question in foos)
-            {
-                string nodetext = random_question.InnerHtml;
-
-                ThemeSI q = new ThemeSI();
-
-                Regex r = new Regex(@"<a.*?>(.*?)</a>.*?");
-                string a = r.Match(random_question.InnerHtml).Value;
-                string descr = Regex.Match(a, @">(.*?)</").Value.Replace(">", "").Replace(@"</", "");
-                int start = a.IndexOf("f=\"") + 3;
-                int length = a.IndexOf("\">") - start;
-                string url = a.Substring(start, length);
-                q.description = descr;
-                q.url = url;
-
-                start = nodetext.IndexOf("<strong>Вопрос") + 27;
-                string tmp = nodetext.Substring(start);
-                length = tmp.IndexOf("<br>") - 1;
-                if (length > 0)
-                {
-                    string th = tmp.Substring(0, length);
-                    if (th.EndsWith("."))
-                        th = th.Substring(0, th.Length - 1);
-                    q.name = th;
-                }
-                else
-                    q.name = q.description;
-
-                // parse questions
-                {
-                    string p = "&nbsp;&nbsp;&nbsp;&nbsp;1";
-                    int s1 = nodetext.IndexOf(p);
-                    if (s1 < 0)
-                        continue;
-                    int e1 = nodetext.IndexOf("<div class='collapsible ");
-                    string txt = nodetext.Substring(s1, e1);
-                    for (int i = 1; i < 5; i++)
-                    {
-                        string searchPattern = "&nbsp;&nbsp;&nbsp;&nbsp;";
-                        start = txt.IndexOf(searchPattern + i.ToString()) + searchPattern.Length + 2;
-                        tmp = txt.Substring(start);
-                        length = tmp.IndexOf("<br>");
-                        string qs = tmp.Substring(0, length);
-                                        
-                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
-                        
-                        q.Questions.Add(qs);
-                    }
-                    string searchPattern5 = "&nbsp;&nbsp;&nbsp;&nbsp;5";
-                    start = txt.IndexOf(searchPattern5) + searchPattern5.Length;
-                    tmp = txt.Substring(start);
-                    length = tmp.IndexOf("<div class='collapsible ");
-                    string qs5 = tmp.Substring(0, length);
-                    
-                    qs5 =  Helpers.HtmlRemoval.StripTagsCharArray(qs5);                    
-                    
-                    q.Questions.Add(qs5);
-                }
-
-                // parse answers
-                {
-                    string p = "Ответ:</strong> <br>";
-                    int s1 = nodetext.IndexOf(p);
-                    string tmpq = nodetext.Substring(s1);
-                    int e1 = tmpq.IndexOf("</p>");
-                    string txt = tmpq.Substring(0, e1);
-                    for (int i = 1; i < 5; i++)
-                    {
-                        string searchPattern = "&nbsp;&nbsp;&nbsp;&nbsp;";
-                        start = txt.IndexOf(searchPattern + i.ToString()) + searchPattern.Length + 2;
-                        tmp = txt.Substring(start);
-                        length = tmp.IndexOf("<br>");
-                        string qs = tmp.Substring(0, length);                        
-                        qs = Helpers.HtmlRemoval.StripTagsCharArray(qs);
-                        if (qs.EndsWith("."))
-                            qs = qs.Substring(0, qs.Length - 1);
-                        q.answers.Add(qs);
-                    }
-                    string searchPattern5 = "&nbsp;&nbsp;&nbsp;&nbsp;5";
-                    start = txt.IndexOf(searchPattern5) + searchPattern5.Length;
-                    string s = txt.Substring(start);
-                    s = Helpers.HtmlRemoval.StripTagsCharArray(s);                    
-                    if (s.EndsWith("."))
-                        s = s.Substring(0, s.Length-1);
-                    q.answers.Add(s);
-                }
-
-                if (nodetext.Contains("<strong>Источник(и):</strong>"))
-                {
-                    start = nodetext.IndexOf("<strong>Источник(и):</strong>") + 29;
-                    tmp = nodetext.Substring(start);
-                    length = tmp.IndexOf("</p>");
-                    string txt = tmp.Substring(0, length);
-                    q.source = Helpers.HtmlRemoval.StripTagsCharArray(txt);              
-                }
-                if (nodetext.Contains("<strong>Автор:</strong>"))
-                {
-                    start = nodetext.IndexOf("<strong>Автор:</strong>") + 24;
-                    tmp = nodetext.Substring(start);
-                    length = tmp.IndexOf("</p>");
-                    string txt = tmp.Substring(0, length);
-                    q.author = Helpers.HtmlRemoval.StripTagsCharArray(txt); ;
-                }
-
-                GameSI.Instance.Themes.Add(q);
+            {                              
+                ThemeSI th = GameSI.Parse(random_question.InnerHtml);
+                GameSI.Instance.Themes.Add(th);
             }
 
             // stop progress bar
             ShowProgress = false;
-            ContentPanel.Visibility = System.Windows.Visibility.Visible;
-
+            ContentPanel.Visibility = System.Windows.Visibility.Visible;            
             // redirect to game
             NavigationService.Navigate(new Uri(@"/Games/si/SIGameQuestion.xaml", UriKind.Relative));
         }

@@ -83,12 +83,28 @@
                      Visibility="Collapsed"
                        Grid.Row="4"
                        Text="Ваш ответ" />
-            <TextBox Name="edtAnswer"
-                     Visibility="Collapsed"
-                     InputScope="Text"
-                       Grid.Row="5"
-                       FontSize="35"
-                       Text="" />
+            <Grid    
+                Name="grAnswer"
+                Visibility="Collapsed"
+                Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Column="0"
+                    Visibility="Visible"
+                    Name="edtAnswer"                
+                    InputScope="Text"                       
+                    FontSize="35"
+                    Text="" />
+                <Button
+                    Visibility="Visible"
+                    Grid.Column="1"
+                    Content=" OK "
+                    Click="btnOk_Click"
+                    Name="btnOk"/>
+            </Grid>
             <TextBlock Name="edtTimer"
                        Grid.Row="6"
                        FontSize="60"
@@ -113,7 +129,7 @@
                     Visibility="Collapsed"
                     Click="btnGo_Click"
                     Width="200" Height="90"
-                    Name="btnGo" Content="OK" />
+                    Name="btnGo" Content="Далее" />
             </StackPanel>
         </Grid>
     </Grid>

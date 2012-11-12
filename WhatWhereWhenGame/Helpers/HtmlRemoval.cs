@@ -12,10 +12,22 @@ namespace WhatWhereWhenGame.Helpers
         /// </summary>
         public static string StripCharCodes(string source)
         {
-            source = source.Replace("\n", " ");
-            source = source.Replace("&nbsp;", " ");
-            source = source.Replace("&mdash;", "-");
-            return source;
+            string outp = source;
+            outp = outp.Replace("\n", " ");
+            outp = outp.Replace("&nbsp;", " ");
+            outp = outp.Replace("&mdash;", "-");
+            return outp;
+        }
+        public static string StripExtraCodes(string source)
+        {
+            string outp = source;
+            outp = outp.Replace("\n", " ");
+            outp = outp.Replace("&nbsp;", " ");
+            outp = outp.Replace("&mdash;", "-");
+            while (outp.Contains("  "))
+                outp = outp.Replace("  ", " ");
+            outp = outp.Trim();
+            return outp;
         }
         /// <summary>
         /// Remove HTML from string with Regex.
