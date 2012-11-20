@@ -13,7 +13,8 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
-
+   
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -53,11 +54,20 @@
                 <TextBlock Name="edtPoints40" Grid.Column="3" Text="40" TextAlignment="Center" FontSize="20" VerticalAlignment="Center" />
                 <TextBlock Name="edtPoints50" Grid.Column="4" Text="50" TextAlignment="Center" FontSize="20" VerticalAlignment="Center" />
             </Grid>
-            <TextBlock Name="edtTheme"
-                       Grid.Row="1"
-                       Margin="10,0,0,0"
-                       FontSize="25"
-                       Text="Тема №" />
+            <ScrollViewer
+                Grid.Row="1"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                VerticalScrollBarVisibility="Auto">
+                <TextBlock 
+                    Name="edtTheme"
+                    FontSize="25"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    Text="Тема №" />
+            </ScrollViewer>
             <TextBlock Name="edtTotal"
                        Grid.Row="2"
                        Margin="0,0,20,0"

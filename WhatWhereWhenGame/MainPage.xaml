@@ -1,6 +1,6 @@
 ﻿<phone:PhoneApplicationPage
     x:Class="WhatWhereWhenGame.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"    
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
@@ -12,12 +12,14 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     BackKeyPress="PhoneApplicationPage_BackKeyPress"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
+    SupportedOrientations="Portrait" 
+    Orientation="Portrait"
+    shell:SystemTray.IsVisible="True" 
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <controls:Pivot Title="ЧГК, Брэйн-ринг, Своя игра">
-            <controls:PivotItem
-                Header="Игры">
+            <controls:PivotItem Header="Игры">
                 <Grid Margin="12,0,12,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -35,9 +37,8 @@
                         VerticalAlignment="Bottom"
                         Source="/WhatWhereWhenGame;component/img/pimain.png"/>
                 </Grid>
-            </controls:PivotItem>
-            <controls:PivotItem
-                Header="Лицензия">
+            </controls:PivotItem>          
+            <controls:PivotItem Header="Лицензия">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -129,8 +130,7 @@
                     </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
-            <controls:PivotItem
-                Header="О программе">
+            <controls:PivotItem Header="О программе">
                 <StackPanel                
                     Orientation="Vertical">
                     <RichTextBox>                 
@@ -169,7 +169,6 @@
                         Content="Оценить приложение"/>
                 </StackPanel>
             </controls:PivotItem>
-
         </controls:Pivot>
     </Grid>
 </phone:PhoneApplicationPage>

@@ -38,6 +38,8 @@ namespace WhatWhereWhenGame.Games.si
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += OnTimerTick;
             BindQuestion();
+
+            edtTheme.Text = "The Heavy's new album - The Glorious Dead";
         }
 
         private void BindQuestion()

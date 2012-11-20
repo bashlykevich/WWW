@@ -24,6 +24,8 @@ namespace WhatWhereWhenGame.Games.www
 
         public WWWSettings()
         {
+            GameWWW.Instance.Reset(); 
+
             InitializeComponent();
 
             RandomSettings settings = new RandomSettings();

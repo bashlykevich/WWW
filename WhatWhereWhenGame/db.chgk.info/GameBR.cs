@@ -36,5 +36,11 @@ namespace WhatWhereWhenGame.db.chgk.info
             get { return score; }
             set { score = value; }
         }
+        public void Reset()
+        {
+            this.currentIndex = 0;
+            this.score = 0;
+            this.questions.Clear();
+        }
     }
 }

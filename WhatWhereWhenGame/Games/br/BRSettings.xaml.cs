@@ -24,6 +24,8 @@ namespace WhatWhereWhenGame.Games.br
 
         public BRSettings()
         {
+            GameBR.Instance.Reset(); 
+
             InitializeComponent();
 
             RandomSettings settings = new RandomSettings();

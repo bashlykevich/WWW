@@ -35,7 +35,6 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="26" />
                 <RowDefinition Height="80" />
-                <RowDefinition Height="82" />
             </Grid.RowDefinitions>
             <TextBlock Name="edtNumber"
                     Grid.Row="0"
@@ -66,18 +65,26 @@
             <TextBlock Text="Ваш ответ"
                        Grid.Row="4"
                            TextAlignment="Center" />
-            <TextBox Name="edtAnswer"
-                     InputScope="Text"
-                     Margin="0"
-                     Text=""
-                       Grid.Row="5"
-                       FontSize="30" TextWrapping="Wrap" />
-            <StackPanel Name="spButtons"
-                Grid.Row="6"
-                        HorizontalAlignment="Right"                
-                Orientation="Horizontal">
-                <Button Name="btnAnswer" Width="230" Height="90" Content="Ответить" Click="btnAnswer_Click" />                
-            </StackPanel>
+            <Grid 
+                Name="grAnswer"                
+                Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox 
+                Name="edtAnswer"
+                Grid.Column="0"                
+                HorizontalAlignment="Stretch"
+                InputScope="Text"                     
+                FontSize="30" TextWrapping="Wrap" />
+                <Button 
+                Grid.Column="1"
+                Name="btnAnswer"                  
+                Height="90" 
+                Content=" OK " 
+                Click="btnAnswer_Click" />
+            </Grid>
         </Grid>
     </Grid>
     <!--Sample code showing usage of ApplicationBar-->
