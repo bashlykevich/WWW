@@ -28,14 +28,8 @@ namespace WhatWhereWhenGame.Settings
         /// </summary>
         public AppSettings()
         {            
-            try
-            {
+            
                 settings = IsolatedStorageSettings.ApplicationSettings;
-            }
-            catch (System.IO.IsolatedStorage.IsolatedStorageException e)
-            {
-                // handle exception
-            }
         }
 
         /// <summary>

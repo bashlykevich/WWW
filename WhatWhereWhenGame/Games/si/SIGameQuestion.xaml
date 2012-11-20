@@ -102,6 +102,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox
+                    KeyUp="edtAnswer_KeyUp"
                     Grid.Column="0"
                     Visibility="Visible"
                     Name="edtAnswer"                
@@ -111,7 +112,7 @@
                 <Button
                     Visibility="Visible"
                     Grid.Column="1"
-                    Content=" OK "
+                    Content="  OK  "
                     Click="btnOk_Click"
                     Name="btnOk"/>
             </Grid>

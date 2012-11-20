@@ -34,7 +34,7 @@
                 <RowDefinition Height="26" />
                 <RowDefinition Height="60" />
                 <RowDefinition Height="26" />
-                <RowDefinition Height="80" />
+                <RowDefinition Height="90" />
             </Grid.RowDefinitions>
             <TextBlock Name="edtNumber"
                     Grid.Row="0"
@@ -66,24 +66,26 @@
                        Grid.Row="4"
                            TextAlignment="Center" />
             <Grid 
-                Name="grAnswer"                
+                Name="grAnswer"   
+                Margin="0,0,5,10"
                 Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox 
-                Name="edtAnswer"
-                Grid.Column="0"                
-                HorizontalAlignment="Stretch"
-                InputScope="Text"                     
-                FontSize="30" TextWrapping="Wrap" />
+                    Name="edtAnswer"
+                    KeyUp="edtAnswer_KeyUp"
+                    Grid.Column="0"                
+                    HorizontalAlignment="Stretch"
+                    InputScope="Text"                     
+                    FontSize="30" TextWrapping="Wrap" />
                 <Button 
-                Grid.Column="1"
-                Name="btnAnswer"                  
-                Height="90" 
-                Content=" OK " 
-                Click="btnAnswer_Click" />
+                    Grid.Column="1"
+                    Name="btnAnswer"                  
+                    Height="90" 
+                    Content="  OK  " 
+                    Click="btnAnswer_Click" />
             </Grid>
         </Grid>
     </Grid>

@@ -37,9 +37,7 @@ namespace WhatWhereWhenGame.Games.si
             edtTheme.Text = "ТЕМА №" + (index + 1).ToString() + ": " + q.name;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += OnTimerTick;
-            BindQuestion();
-
-            edtTheme.Text = "The Heavy's new album - The Glorious Dead";
+            BindQuestion();            
         }
 
         private void BindQuestion()
@@ -121,7 +119,7 @@ namespace WhatWhereWhenGame.Games.si
 
         private void btnSkip_Click(object sender, RoutedEventArgs e)
         {
-            timer.Stop();
+            timer.Stop();            
             MessageBoxResult r = MessageBox.Show(q.answers[currentPoints]);
             if (currentPoints < 4)
             {
@@ -196,7 +194,7 @@ namespace WhatWhereWhenGame.Games.si
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
         }
 
-        private void btnOk_Click(object sender, RoutedEventArgs e)
+        void PostAnswer()
         {
             btnOk.Visibility = System.Windows.Visibility.Collapsed;
             btnGo.Visibility = System.Windows.Visibility.Visible;
@@ -219,6 +217,19 @@ namespace WhatWhereWhenGame.Games.si
                 GameSI.Instance.statiscticsMinus[currentPoints]++;
             }
             DisplayScore();
+            this.Focus();
+        }
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            PostAnswer();
+        }
+
+        private void edtAnswer_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                PostAnswer();
+            }
         }
     }
 }

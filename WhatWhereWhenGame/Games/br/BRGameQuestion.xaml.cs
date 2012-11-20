@@ -27,9 +27,7 @@ namespace WhatWhereWhenGame.Games.br
             timeToAnswer = q.Answer.Length * 2;
 
             edtNumber.Text = "Вопрос №" + (index + 1).ToString();
-            edtQuestion.Text = q.Question.Replace("\n", " ");
-
-            //            edtAnswer.Text = q.answer;
+            edtQuestion.Text = q.Question.Replace("\n", " ");            
 
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += OnTimerTick;
@@ -111,6 +109,14 @@ namespace WhatWhereWhenGame.Games.br
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void edtAnswer_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                Answer();
+            }
         }
     }
 }

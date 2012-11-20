@@ -112,5 +112,13 @@ namespace WhatWhereWhenGame.Games.www
         {
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
         }
+
+        private void edtAnswer_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                Answer();
+            }
+        }
     }
 }
