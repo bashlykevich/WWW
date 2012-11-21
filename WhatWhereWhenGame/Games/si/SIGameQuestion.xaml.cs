@@ -119,18 +119,17 @@ namespace WhatWhereWhenGame.Games.si
 
         private void btnSkip_Click(object sender, RoutedEventArgs e)
         {
-            timer.Stop();            
-            MessageBoxResult r = MessageBox.Show(q.answers[currentPoints]);
-            if (currentPoints < 4)
-            {
-                tb[currentPoints].Text = "-";
-                currentPoints++;
-                BindQuestion();
-            }
-            else
-            {
-                NextTheme();
-            }
+            timer.Stop();
+            edtAnswer.IsReadOnly = true;
+            edtTimer.Text = "";
+            edtQuestion.Text += "\n\nОтвет: " + q.answers[currentPoints];
+            tb[currentPoints].Text = "-";
+            btnAnswer.Visibility = System.Windows.Visibility.Collapsed;
+            btnSkip.Visibility = System.Windows.Visibility.Collapsed;
+            btnOk.Visibility = System.Windows.Visibility.Collapsed;            
+            btnFix.Visibility = System.Windows.Visibility.Collapsed;
+            btnGo.Visibility = System.Windows.Visibility.Visible;            
+            btnOk.Content = "Далее";            
         }
         private void btnAnswer_Click(object sender, RoutedEventArgs e)
         {
@@ -199,7 +198,7 @@ namespace WhatWhereWhenGame.Games.si
             btnOk.Visibility = System.Windows.Visibility.Collapsed;
             btnGo.Visibility = System.Windows.Visibility.Visible;
             edtAnswer.IsReadOnly = true;
-            edtQuestion.Text = "Ответ: " + q.answers[currentPoints];
+            edtQuestion.Text += "\n\nОтвет: " + q.answers[currentPoints];
             btnFix.Visibility = System.Windows.Visibility.Visible;
             btnOk.Content = "Далее";
             q.userAnswers.Add(edtAnswer.Text);

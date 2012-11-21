@@ -54,7 +54,9 @@
                     </toolbox:ListPicker.FullModeItemTemplate>
                 </toolbox:ListPicker>
                 <TextBlock Height="30" HorizontalAlignment="Left" Margin="2" Name="textBlock2" Text="Количество вопросов" VerticalAlignment="Top" Width="440" />
-                <TextBox Height="72" HorizontalAlignment="Left" Margin="2" Name="edtQ" Text="12" VerticalAlignment="Top" Width="457" />
+                <TextBox Height="72" 
+                         KeyDown="edtQ_KeyDown"
+                         HorizontalAlignment="Left" Margin="2" Name="edtQ" Text="12" VerticalAlignment="Top" Width="457" />
                 <TextBlock Height="30" HorizontalAlignment="Center"
                            Margin="2"
                            Name="textBlock31"
