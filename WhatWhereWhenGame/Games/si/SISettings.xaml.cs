@@ -85,9 +85,10 @@ namespace WhatWhereWhenGame.Games.si
             
             var foos = from foo in doc.DocumentNode.SelectNodes("//div[@class='random_question']") select foo;
             foreach (HtmlNode random_question in foos)
-            {                              
+            {                                             
                 ThemeSI th = GameSI.Parse(random_question.InnerHtml);
-                GameSI.Instance.Themes.Add(th);
+                if(th != null)
+                    GameSI.Instance.Themes.Add(th);
             }
 
             // stop progress bar

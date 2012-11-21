@@ -122,7 +122,7 @@ namespace WhatWhereWhenGame.Games.si
             timer.Stop();
             edtAnswer.IsReadOnly = true;
             edtTimer.Text = "";
-            edtQuestion.Text += "\n\nОтвет: " + q.answers[currentPoints];
+            edtQuestion.Text = "Ответ: " + q.answers[currentPoints] + "\n\n"+ edtQuestion.Text;
             tb[currentPoints].Text = "-";
             btnAnswer.Visibility = System.Windows.Visibility.Collapsed;
             btnSkip.Visibility = System.Windows.Visibility.Collapsed;
@@ -198,7 +198,8 @@ namespace WhatWhereWhenGame.Games.si
             btnOk.Visibility = System.Windows.Visibility.Collapsed;
             btnGo.Visibility = System.Windows.Visibility.Visible;
             edtAnswer.IsReadOnly = true;
-            edtQuestion.Text += "\n\nОтвет: " + q.answers[currentPoints];
+            //edtQuestion.Text += "\n\nОтвет: " + q.answers[currentPoints];
+            edtQuestion.Text = "Ответ: " + q.answers[currentPoints] + "\n\n" + edtQuestion.Text;
             btnFix.Visibility = System.Windows.Visibility.Visible;
             btnOk.Content = "Далее";
             q.userAnswers.Add(edtAnswer.Text);

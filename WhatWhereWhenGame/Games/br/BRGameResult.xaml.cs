@@ -9,12 +9,13 @@ namespace WhatWhereWhenGame.Games.br
     {
         private int index;
         private bool RightAnswer = false;
+        QuestionBR q = new QuestionBR();
 
         public BRGameResult()
         {
             InitializeComponent();
             index = GameBR.Instance.CurrentIndex;
-            QuestionBR q = GameBR.Instance.Questions[index];
+            q = GameBR.Instance.Questions[index];
             edtAnswer.Text = "Ответ: " + q.Answer;
             edtAuthor.Text = "Автор: " + q.author;
             if (!String.IsNullOrEmpty(q.Comments))
@@ -68,6 +69,14 @@ namespace WhatWhereWhenGame.Games.br
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
+        private void btnShowQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ShowQuestion();
+        }
+        void ShowQuestion()
+        {
+            MessageBox.Show(q.Question);
         }
     }
 }

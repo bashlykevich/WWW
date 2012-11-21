@@ -55,17 +55,23 @@
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"
                                TextWrapping="Wrap" />
-
-                <StackPanel Name="spCount"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
-                    <Button
-                    HorizontalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    FontSize="26"
-                    Name="btnScoreMyAnswer"
-                    Content="Засчитать мой ответ" Click="btnScoreMyAnswer_Click" />
-                </StackPanel>
+                <Grid Name="spCount"
+                      HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnShowQuestion"
+                            Click="btnShowQuestion_Click"
+                            Grid.Column="0"
+                            Content=" Вопрос "/>
+                    <Button Name="btnScoreMyAnswer"
+                            Grid.Column="1"                            
+                            FontSize="26"
+                            HorizontalAlignment="Stretch"
+                            Content="Засчитать мой ответ" 
+                            Click="btnScoreMyAnswer_Click" />
+                </Grid>
                 <TextBlock Name="edtAuthor"
                        FontSize="20"
                        VerticalAlignment="Stretch"

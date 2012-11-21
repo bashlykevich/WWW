@@ -61,7 +61,9 @@ namespace WhatWhereWhenGame.db.chgk.info
             res.description = s5.Substring(0, s5.IndexOf("</a></p>")).Trim();
             string s6 = s5.Remove(0, s5.IndexOf("</strong>") + 9).Trim(); // </a></p> <strong>Вопрос 1:</strong>
 
-            string name = s6.Substring(0, s6.IndexOf("<br>")).Trim();
+            if (!s6.Contains("<br> 1"))
+                return null;
+            string name = s6.Substring(0, s6.IndexOf("<br> 1")).Trim();
             if (name.EndsWith("."))
                 name = name.Substring(0, name.Length - 1);
             res.name = name;
@@ -75,7 +77,8 @@ namespace WhatWhereWhenGame.db.chgk.info
                 s7 = s8.Remove(0, s8.IndexOf("<")).Trim(); // <br>                
             }
 
-            string s9 = s7.Remove(0, s7.IndexOf("<br>") + 4).Trim();
+            string s89 = s7.Remove(0, s7.IndexOf("<br>") + 4).Trim();
+            string s9 = s89.Remove(0, s89.IndexOf("1")).Trim();
             string s10 = "";
             for (int i = 0; i < 5; i++)
             {

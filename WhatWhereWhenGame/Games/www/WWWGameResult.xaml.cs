@@ -9,12 +9,12 @@ namespace WhatWhereWhenGame.Games.www
     {
         private int index;
         private bool RightAnswer = false;
-
+        QuestionWWW q = new QuestionWWW();
         public WWWGameResult()
         {
             InitializeComponent();
             index = GameWWW.Instance.CurrentIndex;
-            QuestionWWW q = GameWWW.Instance.Questions[index];
+            q = GameWWW.Instance.Questions[index];
             edtAnswer.Text = "Ответ: " + q.Answer;
             edtAuthor.Text = "Автор: " + q.author;
             if (!String.IsNullOrEmpty(q.Comments))
@@ -68,6 +68,15 @@ namespace WhatWhereWhenGame.Games.www
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             NavigationService.Navigate(new Uri(@"/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void btnShowQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ShowQuestion();
+        }
+        void ShowQuestion()
+        {
+            MessageBox.Show(q.Question);
         }
     }
 }
