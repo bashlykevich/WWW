@@ -100,6 +100,7 @@ namespace WhatWhereWhenGame.Games.si
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            GameSI.Instance.IsTraining = edtTrainMode.IsChecked.HasValue?edtTrainMode.IsChecked.Value:false;
             LoadingData();
         }
 

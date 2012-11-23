@@ -6,6 +6,13 @@ namespace WhatWhereWhenGame.db.chgk.info
     {
         private static readonly GameSI instance = new GameSI();
         private int currentIndex = 0;
+        bool isTraining = false;
+
+        public bool IsTraining
+        {
+            get { return isTraining; }
+            set { isTraining = value; }
+        }
 
         public int[] statiscticsPlus = { 0, 0, 0, 0, 0 };
         public int[] statiscticsMinus = { 0, 0, 0, 0, 0 };
@@ -49,64 +56,84 @@ namespace WhatWhereWhenGame.db.chgk.info
             }            
             this.themes.Clear();            
         }
+
         public static ThemeSI Parse(string str)
         {
-            ThemeSI res = new ThemeSI();
-            string s1 = Helpers.HtmlRemoval.StripExtraCodes(str);
-            string s2 = s1.Remove(0, 4).Trim(); // <hr>
-            string s3 = s2.Remove(0, 3).Trim(); // <p>
-            string s4 = s3.Remove(0, 9).Trim(); // <a href="
-            res.url = s4.Substring(0, s4.IndexOf('>') - 1); // URL
-            string s5 = s4.Remove(0, res.url.Length + 2).Trim(); // ">
-            res.description = s5.Substring(0, s5.IndexOf("</a></p>")).Trim();
-            string s6 = s5.Remove(0, s5.IndexOf("</strong>") + 9).Trim(); // </a></p> <strong>Вопрос 1:</strong>
+            ThemeSI res = new ThemeSI();                                   
+            string s = Helpers.HtmlRemoval.StripExtraCodes(str);
 
-            if (!s6.Contains("<br> 1"))
-                return null;
-            string name = s6.Substring(0, s6.IndexOf("<br> 1")).Trim();
-            if (name.EndsWith("."))
-                name = name.Substring(0, name.Length - 1);
-            res.name = name;
-
-            string s7 = s6.Remove(0, res.name.Length + 4).Trim(); // <br>
-            string s8 = "";
-            for (int i = 0; i < 5; i++)
+            // Question Delimiter
+            string QuestionDelemiter = ". ";
+            if(s.Contains("10.")
+                && s.Contains("20.")
+                && s.Contains("30.")
+                && s.Contains("40.")
+                && s.Contains("50."))
             {
-                s8 = s7.Remove(0, s7.IndexOf('.') + 1).Trim(); // 1.
-                res.Questions.Add(s8.Substring(0, s8.IndexOf("<")).Trim());
-                s7 = s8.Remove(0, s8.IndexOf("<")).Trim(); // <br>                
+                QuestionDelemiter = "0. ";
+            }
+            
+            // URL, DESCR
+            string a = Substring(s, "<a ", "</a>", true);
+            string url = Substring(a, "href=\"", "\">");
+            string descr = Substring(a, "\">", "</a>");
+
+            res.url = url;
+            res.description = descr;
+
+            // cut start
+            s = s.Substring(s.IndexOf("<strong>Вопрос"));
+
+            // theme name
+            string n = Substring(s, "</strong>", " 1" + QuestionDelemiter);
+            if (n.Contains("<br>"))
+                n = n.Substring(0, n.IndexOf("<br>"));
+            res.name = n;
+
+            //questions
+            string qs = Substring(s, n, "div class='collapsible collapsed'>");
+            for (int i = 1; i < 6; i++)
+            {
+                string q = Substring(qs, i.ToString() + QuestionDelemiter, "<");
+                res.Questions.Add(q);                
             }
 
-            string s89 = s7.Remove(0, s7.IndexOf("<br>") + 4).Trim();
-            string s9 = s89.Remove(0, s89.IndexOf("1")).Trim();
-            string s10 = "";
-            for (int i = 0; i < 5; i++)
-            {
-                s10 = s9.Remove(0, s9.IndexOf('.') + 1).Trim(); // 1.
-                string a = s10.Substring(0, s10.IndexOf("<")).Trim();
-                if (a.EndsWith("."))
-                    a = a.Substring(0, a.Length - 1);
-                res.answers.Add(a);
-                s9 = s10.Remove(0, s10.IndexOf("<")).Trim(); // <br>                
-            }
+            // cut start
+            s = s.Substring(s.IndexOf("<strong>Ответ:</strong>"));
 
-            string nodetext = s9;
-            if (nodetext.Contains("<strong>Источник(и):</strong>"))
+            // answers
+            for (int i = 1; i < 6; i++)
             {
-                int start = nodetext.IndexOf("<strong>Источник(и):</strong>") + 29;
-                string tmp = nodetext.Substring(start);
-                int length = tmp.IndexOf("</p>");
-                string txt = tmp.Substring(0, length);
-                res.source = Helpers.HtmlRemoval.StripTagsCharArray(txt);
+                string q = Substring(s, i.ToString() + QuestionDelemiter, "<");
+                res.answers.Add(q);
             }
-            if (nodetext.Contains("<strong>Автор:</strong>"))
+                
+            if (s.Contains("<strong>Источник(и):</strong>"))
             {
-                int start = nodetext.IndexOf("<strong>Автор:</strong>") + 24;
-                string tmp = nodetext.Substring(start);
-                int length = tmp.IndexOf("</p>");
-                string txt = tmp.Substring(0, length);
-                res.author = Helpers.HtmlRemoval.StripTagsCharArray(txt); ;
+                res.source = Helpers.HtmlRemoval.StripTagsCharArray(Substring(s, "<strong>Источник(и):</strong>", "</p>"));
             }
+            if (s.Contains("<strong>Автор:</strong>"))
+            {
+                res.source = Helpers.HtmlRemoval.StripTagsCharArray(Substring(s, "<strong>Автор:</strong>", "</p>"));
+            }
+            if (s.Contains("<strong>Авторы:</strong>"))
+            {
+                res.source = Helpers.HtmlRemoval.StripTagsCharArray(Substring(s, "<strong>Авторы:</strong>", "</p>"));
+            }
+            return res;
+        }
+        private static string Substring(string src, string startChars, string endChars, bool includeLimiters=false)
+        {
+            int start = src.IndexOf(startChars);
+            if (!includeLimiters)
+                start += startChars.Length;
+            
+            src = src.Substring(start);
+               
+            int length = src.IndexOf(endChars);
+            if (includeLimiters)
+                length += endChars.Length;
+            string res = src.Substring(0, length);
             return res;
         }
     }

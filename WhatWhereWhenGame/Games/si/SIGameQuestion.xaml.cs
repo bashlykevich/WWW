@@ -134,15 +134,20 @@ namespace WhatWhereWhenGame.Games.si
         private void btnAnswer_Click(object sender, RoutedEventArgs e)
         {
             timer.Stop();
-
             btnAnswer.Visibility = System.Windows.Visibility.Collapsed;
             btnSkip.Visibility = System.Windows.Visibility.Collapsed;
             edtTimer.Visibility = System.Windows.Visibility.Collapsed;
 
-            //btnGo.Visibility = System.Windows.Visibility.Visible;
-            grAnswer.Visibility = System.Windows.Visibility.Visible;
-            edtAnswerTitle.Visibility = System.Windows.Visibility.Visible;
-            edtAnswer.Focus();
+            if (GameSI.Instance.IsTraining)
+            {
+                PostAnswer();
+            }
+            else
+            {
+                grAnswer.Visibility = System.Windows.Visibility.Visible;
+                edtAnswerTitle.Visibility = System.Windows.Visibility.Visible;
+                edtAnswer.Focus();
+            }
         }
 
         private void NextTheme()

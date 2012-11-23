@@ -85,8 +85,15 @@
                         <toolbox:DatePicker x:Name="edtDateEnd"
                                             HorizontalAlignment="Left"
                                             Width="200" />
-                    </StackPanel>
+                    </StackPanel>                    
                 </StackPanel>
+                <CheckBox Name="edtTrainMode"
+                          Margin="0,40,0,0"
+                          Content="Режим тренировки "/>
+                <TextBlock TextWrapping="Wrap"  
+                           Margin="20,0,0,0"
+                           FontSize="18"
+                           Text="В этом режиме нет необходимости ввода ответа"/>
             </StackPanel>
             <Button 
                 Grid.Row="1"
