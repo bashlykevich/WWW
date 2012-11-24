@@ -53,5 +53,14 @@ namespace WhatWhereWhenGame
             MarketplaceReviewTask marketplaceReviewTask = new MarketplaceReviewTask();
             marketplaceReviewTask.Show();
         }
+
+        private void btnHistory_Click(object sender, RoutedEventArgs e)
+        {
+            ShowHistory();
+        }
+        void ShowHistory()
+        {
+            MessageBox.Show(edtHistory.Text, "История изменений", MessageBoxButton.OK);
+        }
     }
 }

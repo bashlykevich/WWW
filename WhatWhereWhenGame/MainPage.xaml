@@ -58,7 +58,7 @@
                         VerticalScrollBarVisibility="Visible"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
-                        Visibility="Collapsed" >
+                        Visibility="Visible" >
                         <RichTextBox
                             VerticalAlignment="Stretch"                            
                             TextWrapping="Wrap">
@@ -143,22 +143,45 @@
                         <Paragraph>
                            В приложение, помимо ЧГК, входят игры "Брэйн-ринг" и "Своя игра".
                         </Paragraph>
-                    </RichTextBox>
-                    <TextBlock VerticalAlignment="Stretch"
-                       Margin="15,10,0,0"
-                       HorizontalAlignment="Stretch"
-                       Text="Разработчик: Сергей Башлыкевич, Минск"
-                       TextWrapping="Wrap" />
+                    </RichTextBox>                    
                     <TextBlock VerticalAlignment="Stretch"
                        Margin="15,25,0,1"
                        HorizontalAlignment="Stretch"
                        Text="В приложении используются вопросы из Базы Вопросов Интернет-клуба Что? Где? Когда? (http://db.chgk.info)."
                        TextWrapping="Wrap" />
                     <TextBlock VerticalAlignment="Stretch"
-                       Margin="15,25,0,40"
+                       Margin="15,25,0,0"
                        HorizontalAlignment="Stretch"
                        Text="Ваши предложения и отзывы присылайте на bashlykevich@gmail.com"
-                       TextWrapping="Wrap" />                 
+                       TextWrapping="Wrap" />
+                    <TextBlock Name="edtHistory"
+                               Visibility="Collapsed">
+--- релиз версии 1.0.1.0<LineBreak />
++ увеличена высота названия темы СИ<LineBreak />
++ после нажатия на кнопку "засчитать ответ" она прячется<LineBreak />
++ из вопроса СИ вырезается(Аукцион.), [Аукцион.]<LineBreak />
++ в описании заменены дефисы на тире<LineBreak />
++ исправлен приводивший к вылету баг при загрузке вопросов СИ<LineBreak />
++ изменено количество вопросов по умолчанию на 12,12,6<LineBreak />
++ добавлен режим тренировки СИ (без ввода ответа)<LineBreak />
++ целиком переписан парсинг вопросов СИ<LineBreak />
++ возможность просмотр текста вопроса ЧГК и БР после ответа<LineBreak />
++ ввод количества вопросов: убирать клавиатуру по нажатию Enter<LineBreak />
++ редизайн кнопки ответа СИ<LineBreak />
++ в текстовых полях программы ОК по нажатию Enter<LineBreak />
++ прятать клавиатуру по нажатию Enter<LineBreak />
++ редизайн кнопки ответа ЧГК<LineBreak />
++ редизайн кнопки ответа БР<LineBreak />
++ в темах из более чем 5 вопросов удалять лишнее<LineBreak />
++ убраны иногда появляшиеся коды html в названиях тем СИ<LineBreak />
++ обнулять счёт при перегенерации пакеты после отыгрыша<LineBreak />
++ надписи без лишних заглавных<LineBreak />
++ лицензия видна по умолчанию<LineBreak />          
++ добавлена "История изменений" на страницу "О программе"<LineBreak />
+                    </TextBlock>
+                    <Button Name="btnHistory"
+                            Click="btnHistory_Click"
+                            Content="История изменений"/>
                     <TextBlock
                         TextWrapping="Wrap">
                         Будьте добры, оцените это приложение и оставьте короткий отзыв на Marketplace — много времени не займёт, а автору приятно.
