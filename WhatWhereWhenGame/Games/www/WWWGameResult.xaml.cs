@@ -17,6 +17,7 @@ namespace WhatWhereWhenGame.Games.www
             q = GameWWW.Instance.Questions[index];
             edtAnswer.Text = "Ответ: " + q.Answer;
             edtAuthor.Text = "Автор: " + q.author;
+            btnScoreMyAnswer.Visibility = System.Windows.Visibility.Visible;
             if (!String.IsNullOrEmpty(q.Comments))
                 edtComments.Text = "Комментарий: " + q.Comments;
             if (q.userAnswer.ToUpper() == q.Answer.ToUpper())
@@ -56,6 +57,7 @@ namespace WhatWhereWhenGame.Games.www
 
         private void btnScoreMyAnswer_Click(object sender, RoutedEventArgs e)
         {
+            btnScoreMyAnswer.Visibility = System.Windows.Visibility.Collapsed;
             if (!RightAnswer)
             {
                 GameWWW.Instance.Score++;

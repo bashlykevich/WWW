@@ -15,7 +15,7 @@ namespace WhatWhereWhenGame.Helpers
             string outp = source;
             outp = outp.Replace("\n", " ");
             outp = outp.Replace("&nbsp;", " ");
-            outp = outp.Replace("&mdash;", "-");
+            outp = outp.Replace("&mdash;", "—");
             return outp;
         }
         public static string StripExtraCodes(string source)
@@ -23,7 +23,9 @@ namespace WhatWhereWhenGame.Helpers
             string outp = source;
             outp = outp.Replace("\n", " ");
             outp = outp.Replace("&nbsp;", " ");
-            outp = outp.Replace("&mdash;", "-");
+            //outp = outp.Replace("&mdash;", "-");
+            outp = outp.Replace("&mdash;", "—");
+                //
             while (outp.Contains("  "))
                 outp = outp.Replace("  ", " ");
             outp = outp.Trim();

@@ -31,7 +31,7 @@ namespace WhatWhereWhenGame.Games.br
             RandomSettings settings = new RandomSettings();
             settings.DateFrom = new DateTime(1990, 1, 1);
             settings.DateTo = DateTime.Now;
-            settings.Quantity = 24;
+            settings.Quantity = 12;
             settings.ComplexityList.Add("Любой");
             settings.ComplexityList.Add("Очень простой");
             settings.ComplexityList.Add("Простой");

@@ -191,6 +191,7 @@ namespace WhatWhereWhenGame.Games.si
                 GameSI.Instance.statiscticsMinus[currentPoints]--;
                 DisplayScore();
             }
+            btnFix.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
